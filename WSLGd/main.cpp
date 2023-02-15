@@ -4,6 +4,7 @@
 #include "common.h"
 #include "ProcessMonitor.h"
 #include "FontMonitor.h"
+#include <libgen.h>
 
 #define CONFIG_FILE ".wslgconfig"
 #define MSRDC_EXE "msrdc.exe"
@@ -421,6 +422,7 @@ try {
 
     // Setup notify for wslgd-notify.so
     wil::unique_fd notifyFd(SetupReadyNotify(WESTON_NOTIFY_SOCKET));
+    THROW_LAST_ERROR_IF(chown(WESTON_NOTIFY_SOCKET, passwordEntry->pw_uid, passwordEntry->pw_gid) < 0);
     THROW_LAST_ERROR_IF(!notifyFd);
 
     // Construct weston option string.
@@ -523,7 +525,7 @@ try {
     monitor.LaunchProcess(std::vector<std::string>{
         "/init",
         std::move(rdpClientExePath),
-        basename(rdpClientExePath.c_str()),
+        basename((char *)rdpClientExePath.c_str()),
         std::move(remote),
         std::move(serviceId),
         "/silent",

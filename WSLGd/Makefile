@@ -1,4 +1,3 @@
-CXX := clang++
 LDFLAGS := -lcap
 TARGET := WSLGd
 SRC_DIRS := .
@@ -15,7 +14,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CPPFLAGS := $(INC_FLAGS) -MMD -MP -std=c++17
 
 $(TARGET): $(OBJS)
-	$(CXX) $(LDFLAGS) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS)
+	$(CXX) -s -static -static-libgcc $(OBJS) -o $@ $(LOADLIBES) $(LDFLAGS) $(LDLIBS)
 
 .PHONY: clean
 clean:

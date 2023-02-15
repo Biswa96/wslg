@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 #pragma once
-#define SHARE_PATH "/mnt/wslg"
+#define SHARE_PATH "/mnt/wsl"
 #define USER_DISTRO_MOUNT_PATH SHARE_PATH "/distro"
 
 void LogPrint(int level, const char *func, int line, const char *fmt, ...) noexcept;
